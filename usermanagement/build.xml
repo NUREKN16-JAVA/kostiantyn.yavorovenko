@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="usermanagment" default="clean" basedir=".">
+    <description>
+        usermanagment project
+    </description>
+    <property name="build-dir" value="${basedir}/target"/>
+    <property name="main-java-dir" value="${basedir}/src/main/java/ua/nure/kn/yavorovenko/usermanagment"/>
+    <property name="test-java-dir" value="${basedir}/src/test/java/ua/nure/kn/yavorovenko/usermanagment"/>
+    <property name="classes-dir" value="${build-dir}/classes"/>
+
+    <property name="ant-build-javac-source" value="1.8"/>
+    <property name="ant-build-javac-target" value="1.8"/>
+
+    <path id="classpath-test">
+        <pathelement location="lib/junit-4.10.jar"/>
+    </path>
+
+    <target name="clean" description="clean up">
+        <delete dir="${build-dir}" failonerror="no"/>
+    </target>
+
+
+    <target name="init" depends="clean">
+        <tstamp/>
+        <mkdir dir="${build-dir}"/>
+        <mkdir dir="${classes-dir}"/>
+    </target>
+
+
+    <target name="compile" depends="init" description="compile the source">
+        <javac target="${ant-build-javac-target}" srcdir="${main-java-dir}" destdir="${build-dir}" includeantruntime="false"/>
+    </target>
+
+    <target name="compile-test" depends="compile">
+        <javac target="${ant-build-javac-target}" srcdir="${test-java-dir}" destdir="${build-dir}" includeantruntime="false">
+            <classpath refid="classpath-test"/>
+        </javac>
+    </target>
+
+    <target name="test" depends="compile-test">
+        <junit printsummary="yes" haltonfailure="no">
+            <classpath>
+                <path refid="classpath-test"/>
+                <pathelement location="${build-dir}"/>
+            </classpath>
+
+            <formatter type="brief" usefile="false" />
+
+            <batchtest>
+                <fileset dir="${build-dir}" includes="**/*Test.class" />
+            </batchtest>
+        </junit>
+    </target>
+</project>
