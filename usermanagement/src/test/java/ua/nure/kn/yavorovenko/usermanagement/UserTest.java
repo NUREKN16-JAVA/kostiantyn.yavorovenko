@@ -1,4 +1,4 @@
-package ua.nure.kn.yavorovenko.usermanagment;
+package ua.nure.kn.yavorovenko.usermanagement;
 
 import org.junit.After;
 import org.junit.Before;

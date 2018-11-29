@@ -4,8 +4,8 @@
         usermanagment project
     </description>
     <property name="build-dir" value="${basedir}/target"/>
-    <property name="main-java-dir" value="${basedir}/src/main/java/ua/nure/kn/yavorovenko/usermanagment"/>
-    <property name="test-java-dir" value="${basedir}/src/test/java/ua/nure/kn/yavorovenko/usermanagment"/>
+    <property name="main-java-dir" value="/ua/nure/kn/yavorovenko/usermanagement"/>
+    <property name="test-java-dir" value="${basedir}/src/test/java/ua/nure/kn/yavorovenko/usermanagement"/>
     <property name="classes-dir" value="${build-dir}/classes"/>
 
     <property name="ant-build-javac-source" value="1.8"/>

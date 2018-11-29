@@ -1,4 +1,4 @@
-package ua.nure.kn.yavorovenko.usermanagment;
+package ua.nure.kn.yavorovenko.usermanagement;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -13,6 +13,15 @@ public class User implements Serializable {
     private String lastName;
     private Date dateOfBirth;
 
+    public User() {
+    }
+
+    public User(Long id, String firstName, String lastName, Date dateOfBirth) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+    }
 
     public Long getId() {
         return id;
