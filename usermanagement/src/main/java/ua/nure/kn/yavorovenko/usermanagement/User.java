@@ -1,6 +1,8 @@
 package ua.nure.kn.yavorovenko.usermanagement;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -71,16 +73,12 @@ public class User implements Serializable {
         if (dateOfBirthday.after(today)) {
             throw new IllegalArgumentException("The age can not be negative!");
         }
-        int ageCounter = 0;
 
-        while (dateOfBirthday.before(today)) {
-            dateOfBirthday.add(Calendar.YEAR, 1);
-            ageCounter += 1;
-        }
+        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        int d1 = Integer.parseInt(formatter.format(getDateOfBirth()));
+        int d2 = Integer.parseInt(formatter.format(today.getTime()));
+        int ageCounter = (d2 - d1) / 10000;
 
-        if (today.get(Calendar.DAY_OF_YEAR) > dateOfBirthday.get(Calendar.DAY_OF_YEAR)) {
-            ageCounter--;
-        }
         return ageCounter;
     }
 }
