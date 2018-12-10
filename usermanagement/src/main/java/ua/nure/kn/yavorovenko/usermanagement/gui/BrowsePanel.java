@@ -9,16 +9,18 @@ import java.awt.event.ActionListener;
 public class BrowsePanel extends JPanel implements ActionListener {
 
     private MainFrame parent;
+
     private JScrollPane tablePanel;
     private JTable userTable;
     private JPanel buttonsPanel;
+
     private JButton addButton;
     private JButton editButton;
     private JButton deleteButton;
     private JButton detailsButton;
 
     public BrowsePanel(MainFrame mainFrame) {
-        parent = mainFrame;
+        this.parent = mainFrame;
         initialize();
     }
 
@@ -36,7 +38,6 @@ public class BrowsePanel extends JPanel implements ActionListener {
             buttonsPanel.add(getEditButton());
             buttonsPanel.add(getDeleteButton());
             buttonsPanel.add(getDetailsButton());
-
         }
         return buttonsPanel;
     }
@@ -89,7 +90,6 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JScrollPane getTablePanel() {
         if (tablePanel == null) {
             tablePanel = new JScrollPane(getUserTable());
-
         }
         return tablePanel;
     }
@@ -105,6 +105,13 @@ public class BrowsePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String actionCommand = e.getActionCommand();
 
+        if ("add".equalsIgnoreCase(actionCommand)) {
+            this.setVisible(false);
+            parent.showAddPanel();
+        }
     }
+
+
 }

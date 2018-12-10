@@ -9,6 +9,7 @@ public class MainFrame extends JFrame {
     public static final int FRAME_HEIGHT = 600;
     private JPanel contentPanel;
     private BrowsePanel browsePanel;
+    private AddPanel addPanel;
 
     public MainFrame() throws HeadlessException {
         super();
@@ -38,7 +39,24 @@ public class MainFrame extends JFrame {
         return browsePanel;
     }
 
-    public static void main(String[] args) {
+    public void showAddPanel() {
+        showPanel(getAddPanel());
+    }
 
+    private AddPanel getAddPanel() {
+        if (addPanel == null) {
+            addPanel = new AddPanel(this);
+        }
+        return addPanel;
+    }
+
+    private void showPanel(JPanel panel) {
+        getContentPane().add(panel, BorderLayout.CENTER);
+        panel.setVisible(true);
+        panel.repaint();
+    }
+
+    public static void main(String[] args) {
+        new MainFrame().setVisible(true);
     }
 }
