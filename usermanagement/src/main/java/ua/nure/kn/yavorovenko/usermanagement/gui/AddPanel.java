@@ -1,13 +1,19 @@
 package ua.nure.kn.yavorovenko.usermanagement.gui;
 
+import ua.nure.kn.yavorovenko.usermanagement.User;
+import ua.nure.kn.yavorovenko.usermanagement.db.DatabaseException;
 import ua.nure.kn.yavorovenko.usermanagement.util.Messages;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
 
 public class AddPanel extends JPanel implements ActionListener {
+    private static final String EMPTY_STRING = "";
+    private static final Color EMPTY_BACKGROUND_COLOR = Color.WHITE;
     private MainFrame parent;
 
 
@@ -111,7 +117,35 @@ public class AddPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if ("ok".equalsIgnoreCase(e.getActionCommand())) {
+            try {
+                User user = new User();
+                user.setFirstName(getFirstNameField().getText());
+                user.setLastName(getLastNameField().getText());
+                DateFormat format = DateFormat.getDateInstance();
+                user.setDateOfBirth(format.parse(getDateOfBirthField().getText()));
+                parent.getDao().create(user);
+            } catch (DatabaseException e1) {
+                JOptionPane.showMessageDialog(this, e1.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } catch (ParseException e1) {
+                getDateOfBirthField().setBackground(Color.RED);
+                return;
+            }
+        }
+        clearFields();
         this.setVisible(false);
         parent.showBrowsePanel();
+    }
+
+    private void clearFields() {
+        getFirstNameField().setText(EMPTY_STRING);
+        getFirstNameField().setBackground(EMPTY_BACKGROUND_COLOR);
+
+        getLastNameField().setText(EMPTY_STRING);
+        getLastNameField().setBackground(EMPTY_BACKGROUND_COLOR);
+
+        getDateOfBirthField().setText(EMPTY_STRING);
+        getDateOfBirthField().setBackground(EMPTY_BACKGROUND_COLOR);
     }
 }
