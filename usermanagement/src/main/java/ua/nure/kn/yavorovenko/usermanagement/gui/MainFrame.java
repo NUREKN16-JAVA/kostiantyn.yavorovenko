@@ -45,6 +45,10 @@ public class MainFrame extends JFrame {
         showPanel(getAddPanel());
     }
 
+    public void showBrowsePanel() {
+        showPanel(getBrowsePanel());
+    }
+
     private AddPanel getAddPanel() {
         if (addPanel == null) {
             addPanel = new AddPanel(this);
