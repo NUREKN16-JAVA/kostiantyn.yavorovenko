@@ -1,5 +1,7 @@
 package ua.nure.kn.yavorovenko.usermanagement.gui;
 
+import ua.nure.kn.yavorovenko.usermanagement.util.Messages;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -35,9 +37,9 @@ public class AddPanel extends JPanel implements ActionListener {
         if (fieldPanel == null) {
             fieldPanel = new JPanel();
             fieldPanel.setLayout(new GridLayout(3, 2));
-            addLabeledField(fieldPanel, "First name", getFirstNameField());
-            addLabeledField(fieldPanel, "Last name", getLastNameField());
-            addLabeledField(fieldPanel, "Date of birth", getDateOfBirthField());
+            addLabeledField(fieldPanel, Messages.getResourceBundle().getString("AddPanel.first_name"), getFirstNameField());
+            addLabeledField(fieldPanel, Messages.getResourceBundle().getString("AddPanel.last_name"), getLastNameField());
+            addLabeledField(fieldPanel, Messages.getResourceBundle().getString("AddPanel.date_of_birth"), getDateOfBirthField());
         }
         return fieldPanel;
     }
@@ -88,7 +90,7 @@ public class AddPanel extends JPanel implements ActionListener {
     private JButton getOkButton() {
         if (okButton == null){
             okButton = new JButton();
-            okButton.setText("Ok");
+            okButton.setText(Messages.getResourceBundle().getString("AddPanel.ok"));
             okButton.setName("okButton");
             okButton.setActionCommand("ok");
             okButton.addActionListener(this);
@@ -99,7 +101,7 @@ public class AddPanel extends JPanel implements ActionListener {
     private JButton getCancelButton() {
         if (cancelButton == null){
             cancelButton = new JButton();
-            cancelButton.setText("Cancel");
+            cancelButton.setText(Messages.getResourceBundle().getString("AddPanel.cancel"));
             cancelButton.setName("cancelButton");
             cancelButton.setActionCommand("cancel");
             cancelButton.addActionListener(this);

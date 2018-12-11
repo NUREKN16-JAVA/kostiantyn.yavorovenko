@@ -5,6 +5,7 @@ import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
+import ua.nure.kn.yavorovenko.usermanagement.util.Messages;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +38,21 @@ public class MainFrameTest extends JFCTestCase {
 
     public void testBrowseControls() {
         find(JPanel.class, "browsePanel");
-        JTable jTable = (JTable) find(JTable.class, "userTable");
+        JTable table = (JTable) find(JTable.class, "userTable");
+        assertEquals("The table must contain 3 column!", 3, table.getColumnCount());
+
+        assertEquals("The first column must be " + Messages.getResourceBundle().getString("UserTableModel.id"),
+                Messages.getResourceBundle().getString("UserTableModel.id"),
+                table.getColumnName(0));
+
+        assertEquals("The second column must be " + Messages.getResourceBundle().getString("UserTableModel.first_name"),
+                Messages.getResourceBundle().getString("UserTableModel.first_name"),
+                table.getColumnName(1)); // localize
+
+        assertEquals("The third column must be " + Messages.getResourceBundle().getString("UserTableModel.last_name"),
+                Messages.getResourceBundle().getString("UserTableModel.last_name"),
+                table.getColumnName(2)); // localize
+
 
         find(JButton.class, "addButton");
         find(JButton.class, "editButton");

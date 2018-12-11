@@ -1,10 +1,14 @@
 package ua.nure.kn.yavorovenko.usermanagement.gui;
 
 
+import ua.nure.kn.yavorovenko.usermanagement.User;
+import ua.nure.kn.yavorovenko.usermanagement.util.Messages;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class BrowsePanel extends JPanel implements ActionListener {
 
@@ -45,7 +49,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getAddButton() {
         if (addButton == null) {
             addButton = new JButton();
-            addButton.setText("Add"); //localize
+            addButton.setText(Messages.getResourceBundle().getString("BrowsePanel.add")); //localize
             addButton.setName("addButton");
             addButton.setActionCommand("add");
             addButton.addActionListener(this);
@@ -56,7 +60,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getEditButton() {
         if (editButton == null) {
             editButton = new JButton();
-            editButton.setText("Edit"); //localize
+            editButton.setText(Messages.getResourceBundle().getString("BrowsePanel.edit")); //localize
             editButton.setName("editButton");
             editButton.setActionCommand("edit");
             editButton.addActionListener(this);
@@ -68,7 +72,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getDeleteButton() {
         if (deleteButton == null) {
             deleteButton = new JButton();
-            deleteButton.setText("Delete"); //localize
+            deleteButton.setText(Messages.getResourceBundle().getString("BrowsePanel.delete")); //localize
             deleteButton.setName("deleteButton");
             deleteButton.setActionCommand("delete");
             deleteButton.addActionListener(this);
@@ -79,7 +83,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getDetailsButton() {
         if (detailsButton == null) {
             detailsButton = new JButton();
-            detailsButton.setText("Details"); //localize
+            detailsButton.setText(Messages.getResourceBundle().getString("BrowsePanel.details")); //localize
             detailsButton.setName("detailsButton");
             detailsButton.setActionCommand("details");
             detailsButton.addActionListener(this);
@@ -98,6 +102,8 @@ public class BrowsePanel extends JPanel implements ActionListener {
         if (userTable == null) {
             userTable = new JTable();
             userTable.setName("userTable");
+            UserTableModel model = new UserTableModel(new ArrayList<>());
+            userTable.setModel(model);
         }
         return userTable;
     }

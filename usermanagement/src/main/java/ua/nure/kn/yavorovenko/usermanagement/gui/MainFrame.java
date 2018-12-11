@@ -1,5 +1,7 @@
 package ua.nure.kn.yavorovenko.usermanagement.gui;
 
+import ua.nure.kn.yavorovenko.usermanagement.util.Messages;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,7 +21,7 @@ public class MainFrame extends JFrame {
     private void initialize() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        this.setTitle("User management"); //localize
+        this.setTitle(Messages.getResourceBundle().getString("MainFrame.user_management"));
         this.setContentPane(getContentPanel());
     }
 
