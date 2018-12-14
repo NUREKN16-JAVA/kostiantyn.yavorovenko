@@ -1,10 +1,12 @@
 package ua.nure.kn.yavorovenko.usermanagement;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class User implements Serializable {
 
@@ -20,6 +22,12 @@ public class User implements Serializable {
 
     public User(Long id, String firstName, String lastName, Date dateOfBirth) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public User(String firstName, String lastName, Date dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -62,6 +70,35 @@ public class User implements Serializable {
                 .append(", ")
                 .append(getFirstName())
                 .toString();
+    }
+
+    @Override
+    public String toString() {
+        return getFullName();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        if (this.getId() == null && ((User) obj).getId() == null) {
+            return true;
+        }
+        return this.getId().equals(((User) obj).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        if (this.getId() == null) {
+            return 0;
+        }
+        return Objects.hash(this.getId());
     }
 
     public int getAge() {

@@ -50,7 +50,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getAddButton() {
         if (addButton == null) {
             addButton = new JButton();
-            addButton.setText(Messages.getResourceBundle().getString("BrowsePanel.add")); //localize
+            addButton.setText(Messages.getString("BrowsePanel.add")); //localize
             addButton.setName("addButton");
             addButton.setActionCommand("add");
             addButton.addActionListener(this);
@@ -61,7 +61,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getEditButton() {
         if (editButton == null) {
             editButton = new JButton();
-            editButton.setText(Messages.getResourceBundle().getString("BrowsePanel.edit")); //localize
+            editButton.setText(Messages.getString("BrowsePanel.edit")); //localize
             editButton.setName("editButton");
             editButton.setActionCommand("edit");
             editButton.addActionListener(this);
@@ -73,7 +73,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getDeleteButton() {
         if (deleteButton == null) {
             deleteButton = new JButton();
-            deleteButton.setText(Messages.getResourceBundle().getString("BrowsePanel.delete")); //localize
+            deleteButton.setText(Messages.getString("BrowsePanel.delete")); //localize
             deleteButton.setName("deleteButton");
             deleteButton.setActionCommand("delete");
             deleteButton.addActionListener(this);
@@ -84,7 +84,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getDetailsButton() {
         if (detailsButton == null) {
             detailsButton = new JButton();
-            detailsButton.setText(Messages.getResourceBundle().getString("BrowsePanel.details")); //localize
+            detailsButton.setText(Messages.getString("BrowsePanel.details")); //localize
             detailsButton.setName("detailsButton");
             detailsButton.setActionCommand("details");
             detailsButton.addActionListener(this);

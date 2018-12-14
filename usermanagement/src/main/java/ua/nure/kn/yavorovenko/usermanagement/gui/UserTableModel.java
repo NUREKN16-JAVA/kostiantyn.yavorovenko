@@ -10,9 +10,9 @@ import java.util.List;
 
 public class UserTableModel extends AbstractTableModel {
     private static final String[] COLUMN_NAMES = {
-            Messages.getResourceBundle().getString("UserTableModel.id"),
-            Messages.getResourceBundle().getString("UserTableModel.first_name"),
-            Messages.getResourceBundle().getString("UserTableModel.last_name")
+            Messages.getString("UserTableModel.id"),
+            Messages.getString("UserTableModel.first_name"),
+            Messages.getString("UserTableModel.last_name")
     };
     private static final Class<?>[] COLUMN_CLASSES = {Long.class, String.class, String.class};
     private List<User> users = null;

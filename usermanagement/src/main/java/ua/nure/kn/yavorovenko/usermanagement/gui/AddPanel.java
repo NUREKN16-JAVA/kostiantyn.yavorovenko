@@ -43,9 +43,9 @@ public class AddPanel extends JPanel implements ActionListener {
         if (fieldPanel == null) {
             fieldPanel = new JPanel();
             fieldPanel.setLayout(new GridLayout(3, 2));
-            addLabeledField(fieldPanel, Messages.getResourceBundle().getString("AddPanel.first_name"), getFirstNameField());
-            addLabeledField(fieldPanel, Messages.getResourceBundle().getString("AddPanel.last_name"), getLastNameField());
-            addLabeledField(fieldPanel, Messages.getResourceBundle().getString("AddPanel.date_of_birth"), getDateOfBirthField());
+            addLabeledField(fieldPanel, Messages.getString("AddPanel.first_name"), getFirstNameField());
+            addLabeledField(fieldPanel, Messages.getString("AddPanel.last_name"), getLastNameField());
+            addLabeledField(fieldPanel, Messages.getString("AddPanel.date_of_birth"), getDateOfBirthField());
         }
         return fieldPanel;
     }
@@ -96,7 +96,7 @@ public class AddPanel extends JPanel implements ActionListener {
     private JButton getOkButton() {
         if (okButton == null){
             okButton = new JButton();
-            okButton.setText(Messages.getResourceBundle().getString("AddPanel.ok"));
+            okButton.setText(Messages.getString("AddPanel.ok"));
             okButton.setName("okButton");
             okButton.setActionCommand("ok");
             okButton.addActionListener(this);
@@ -107,7 +107,7 @@ public class AddPanel extends JPanel implements ActionListener {
     private JButton getCancelButton() {
         if (cancelButton == null){
             cancelButton = new JButton();
-            cancelButton.setText(Messages.getResourceBundle().getString("AddPanel.cancel"));
+            cancelButton.setText(Messages.getString("AddPanel.cancel"));
             cancelButton.setName("cancelButton");
             cancelButton.setActionCommand("cancel");
             cancelButton.addActionListener(this);
