@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 public class BrowsePanel extends JPanel implements ActionListener {
 
+    private static final String ERROR_TITLE = "Error";
+
     private MainFrame parent;
 
     private JScrollPane tablePanel;
@@ -128,6 +130,48 @@ public class BrowsePanel extends JPanel implements ActionListener {
             this.setVisible(false);
             parent.showAddPanel();
         }
+
+        if (userTable.getSelectedRow() != -1) {
+//            if ("details".equalsIgnoreCase(actionCommand)) {
+//                try {
+//                    User user = getSelectedUser();
+//                    this.setVisible(false);
+//                    parent.showDetailsPanel(user);
+//                } catch (DatabaseException e1) {
+//                    JOptionPane.showMessageDialog(this, e1.getMessage(), ERROR_TITLE,
+//                            JOptionPane.ERROR_MESSAGE);
+//                }
+//            }
+            if ("edit".equalsIgnoreCase(actionCommand)) {
+                try {
+                    User user = getSelectedUser();
+                    this.setVisible(false);
+                    parent.showEditPanel(user);
+                } catch (DatabaseException e1) {
+                    JOptionPane.showMessageDialog(this, e1.getMessage(), ERROR_TITLE,
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            if ("delete".equalsIgnoreCase(actionCommand)) {
+                try {
+                    User user = getSelectedUser();
+                    int answer = JOptionPane.showConfirmDialog(this, Messages.getString("BrowsePanel.confirmDeleteAction") + user + "?");
+                    if (answer == 0) {
+                        parent.getDao().delete(user);
+                        this.initTable();
+                    }
+                } catch (DatabaseException e1) {
+                    JOptionPane.showMessageDialog(this, e1.getMessage(), ERROR_TITLE,
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
+
+    private User getSelectedUser() throws DatabaseException {
+        int row = userTable.getSelectedRow();
+        long userId = Long.parseLong(String.valueOf(userTable.getValueAt(row, 0)));
+        return parent.getDao().find(userId);
     }
 
 

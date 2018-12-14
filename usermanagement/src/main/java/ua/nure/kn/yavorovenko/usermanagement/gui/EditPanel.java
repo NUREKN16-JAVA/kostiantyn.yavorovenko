@@ -11,12 +11,11 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 
-public class AddPanel extends JPanel implements ActionListener {
+public class EditPanel extends JPanel implements ActionListener {
     private static final String EMPTY_STRING = "";
     private static final Color EMPTY_BACKGROUND_COLOR = Color.WHITE;
-    private static final String ERROR_TITLE = "Error";
-    private MainFrame parent;
 
+    private MainFrame parent;
 
     private JPanel buttonsPanel;
     private JPanel fieldPanel;
@@ -28,13 +27,15 @@ public class AddPanel extends JPanel implements ActionListener {
     private JTextField lastNameField;
     private JTextField firstNameField;
 
-    public AddPanel(MainFrame parent) {
+    private User updatedUser;
+
+    public EditPanel(MainFrame parent) {
         this.parent = parent;
         initialize();
     }
 
     private void initialize() {
-        this.setName("addPanel");
+        this.setName("editPanel");
         this.setLayout(new BorderLayout());
         this.add(getFieldPanel(), BorderLayout.NORTH);
         this.add(getButtonsPanel(), BorderLayout.SOUTH);
@@ -44,9 +45,9 @@ public class AddPanel extends JPanel implements ActionListener {
         if (fieldPanel == null) {
             fieldPanel = new JPanel();
             fieldPanel.setLayout(new GridLayout(3, 2));
-            addLabeledField(fieldPanel, Messages.getString("AddPanel.first_name"), getFirstNameField());
-            addLabeledField(fieldPanel, Messages.getString("AddPanel.last_name"), getLastNameField());
-            addLabeledField(fieldPanel, Messages.getString("AddPanel.date_of_birth"), getDateOfBirthField());
+            addLabeledField(fieldPanel, Messages.getString("EditPanel.first_name"), getFirstNameField());
+            addLabeledField(fieldPanel, Messages.getString("EditPanel.last_name"), getLastNameField());
+            addLabeledField(fieldPanel, Messages.getString("EditPanel.date_of_birth"), getDateOfBirthField());
         }
         return fieldPanel;
     }
@@ -58,7 +59,6 @@ public class AddPanel extends JPanel implements ActionListener {
         }
         return dateOfBirthField;
     }
-
 
     private JTextField getLastNameField() {
         if (lastNameField == null) {
@@ -95,7 +95,7 @@ public class AddPanel extends JPanel implements ActionListener {
     }
 
     private JButton getOkButton() {
-        if (okButton == null){
+        if (okButton == null) {
             okButton = new JButton();
             okButton.setText(Messages.getString("AddPanel.ok"));
             okButton.setName("okButton");
@@ -106,7 +106,7 @@ public class AddPanel extends JPanel implements ActionListener {
     }
 
     private JButton getCancelButton() {
-        if (cancelButton == null){
+        if (cancelButton == null) {
             cancelButton = new JButton();
             cancelButton.setText(Messages.getString("AddPanel.cancel"));
             cancelButton.setName("cancelButton");
@@ -120,20 +120,20 @@ public class AddPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if ("ok".equalsIgnoreCase(e.getActionCommand())) {
             try {
-                User user = new User();
-                user.setFirstName(getFirstNameField().getText());
-                user.setLastName(getLastNameField().getText());
+                updatedUser.setFirstName(getFirstNameField().getText());
+                updatedUser.setLastName(getLastNameField().getText());
                 DateFormat format = DateFormat.getDateInstance();
-                user.setDateOfBirth(format.parse(getDateOfBirthField().getText()));
-                parent.getDao().create(user);
+                updatedUser.setDateOfBirth(format.parse(getDateOfBirthField().getText()));
+                parent.getDao().update(updatedUser);
             } catch (DatabaseException e1) {
-                JOptionPane.showMessageDialog(this, e1.getMessage(), ERROR_TITLE,
+                JOptionPane.showMessageDialog(this, e1.getMessage(), "Error",
                         JOptionPane.ERROR_MESSAGE);
             } catch (ParseException e1) {
                 getDateOfBirthField().setBackground(Color.RED);
                 return;
             }
         }
+        updatedUser = null;
         clearFields();
         this.setVisible(false);
         parent.showBrowsePanel();
@@ -148,5 +148,17 @@ public class AddPanel extends JPanel implements ActionListener {
 
         getDateOfBirthField().setText(EMPTY_STRING);
         getDateOfBirthField().setBackground(EMPTY_BACKGROUND_COLOR);
+    }
+
+    public void setUser(User editUser) {
+        this.updatedUser = editUser;
+        fillTextFields();
+    }
+
+    public void fillTextFields() {
+        firstNameField.setText(updatedUser.getFirstName());
+        lastNameField.setText(updatedUser.getLastName());
+        DateFormat format = DateFormat.getDateInstance();
+        dateOfBirthField.setText(format.format(updatedUser.getDateOfBirth()));
     }
 }

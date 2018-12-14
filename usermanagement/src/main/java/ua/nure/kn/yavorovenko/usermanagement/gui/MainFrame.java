@@ -1,5 +1,6 @@
 package ua.nure.kn.yavorovenko.usermanagement.gui;
 
+import ua.nure.kn.yavorovenko.usermanagement.User;
 import ua.nure.kn.yavorovenko.usermanagement.db.DaoFactory;
 import ua.nure.kn.yavorovenko.usermanagement.db.UserDao;
 import ua.nure.kn.yavorovenko.usermanagement.util.Messages;
@@ -11,10 +12,12 @@ public class MainFrame extends JFrame {
 
     public static final int FRAME_WIDTH = 800;
     public static final int FRAME_HEIGHT = 600;
+
     private JPanel contentPanel;
     private BrowsePanel browsePanel;
     private AddPanel addPanel;
     private UserDao dao;
+    private EditPanel editPanel;
 
     public MainFrame() throws HeadlessException {
         super();
@@ -58,11 +61,23 @@ public class MainFrame extends JFrame {
         showPanel(getBrowsePanel());
     }
 
+    public void showEditPanel(User editUser){
+        showPanel(getEditPanel());
+        editPanel.setUser(editUser);
+    }
+
     private AddPanel getAddPanel() {
         if (addPanel == null) {
             addPanel = new AddPanel(this);
         }
         return addPanel;
+    }
+
+    public EditPanel getEditPanel() {
+        if (editPanel == null) {
+            editPanel = new EditPanel(this);
+        }
+        return editPanel;
     }
 
     private void showPanel(JPanel panel) {
