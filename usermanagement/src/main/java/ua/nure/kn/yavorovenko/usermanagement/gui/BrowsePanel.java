@@ -11,9 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+
 public class BrowsePanel extends JPanel implements ActionListener {
 
     private static final String ERROR_TITLE = "Error";
+    private static final int CONFIRM_DELETE_ACTION = 0;
 
     private MainFrame parent;
 
@@ -155,8 +158,9 @@ public class BrowsePanel extends JPanel implements ActionListener {
             if ("delete".equalsIgnoreCase(actionCommand)) {
                 try {
                     User user = getSelectedUser();
+
                     int answer = JOptionPane.showConfirmDialog(this, Messages.getString("BrowsePanel.confirmDeleteAction") + user + "?");
-                    if (answer == 0) {
+                    if (answer == CONFIRM_DELETE_ACTION) {
                         parent.getDao().delete(user);
                         this.initTable();
                     }
