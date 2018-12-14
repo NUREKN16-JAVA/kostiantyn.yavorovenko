@@ -262,7 +262,7 @@ public class MainFrameTest extends JFCTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, detailsButton));
 
         find(JPanel.class, "detailsPanel");
-        
+
         JTextField fullNameField = (JTextField) find(JTextField.class, "fullNameField");
         JTextField ageField = (JTextField) find(JTextField.class, "ageField");
 

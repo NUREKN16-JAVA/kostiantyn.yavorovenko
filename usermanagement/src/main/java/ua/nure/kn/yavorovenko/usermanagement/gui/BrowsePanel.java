@@ -11,11 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import static javax.swing.JOptionPane.QUESTION_MESSAGE;
-
 public class BrowsePanel extends JPanel implements ActionListener {
 
-    private static final String ERROR_TITLE = "Error";
+    private static final String ERROR_TITLE = Messages.getString("BrowsePanel.error_title");
     private static final int CONFIRM_DELETE_ACTION = 0;
 
     private MainFrame parent;
@@ -55,7 +53,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getAddButton() {
         if (addButton == null) {
             addButton = new JButton();
-            addButton.setText(Messages.getString("BrowsePanel.add")); //localize
+            addButton.setText(Messages.getString("BrowsePanel.add"));
             addButton.setName("addButton");
             addButton.setActionCommand("add");
             addButton.addActionListener(this);
@@ -118,7 +116,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
             model = new UserTableModel(parent.getDao().findAll());
         } catch (DatabaseException e) {
             model = new UserTableModel(new ArrayList<>());
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error",
+            JOptionPane.showMessageDialog(this, e.getMessage(), ERROR_TITLE,
                     JOptionPane.ERROR_MESSAGE); // localize
         }
         getUserTable().setModel(model);

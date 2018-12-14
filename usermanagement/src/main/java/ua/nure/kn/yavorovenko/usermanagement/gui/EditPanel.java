@@ -14,6 +14,7 @@ import java.text.ParseException;
 public class EditPanel extends JPanel implements ActionListener {
     private static final String EMPTY_STRING = "";
     private static final Color EMPTY_BACKGROUND_COLOR = Color.WHITE;
+    private static final String ERROR_TITLE = Messages.getString("EditPanel.error_title");
 
     private MainFrame parent;
 
@@ -97,7 +98,7 @@ public class EditPanel extends JPanel implements ActionListener {
     private JButton getOkButton() {
         if (okButton == null) {
             okButton = new JButton();
-            okButton.setText(Messages.getString("AddPanel.ok"));
+            okButton.setText(Messages.getString("EditPanel.ok"));
             okButton.setName("okButton");
             okButton.setActionCommand("ok");
             okButton.addActionListener(this);
@@ -108,7 +109,7 @@ public class EditPanel extends JPanel implements ActionListener {
     private JButton getCancelButton() {
         if (cancelButton == null) {
             cancelButton = new JButton();
-            cancelButton.setText(Messages.getString("AddPanel.cancel"));
+            cancelButton.setText(Messages.getString("EditPanel.cancel"));
             cancelButton.setName("cancelButton");
             cancelButton.setActionCommand("cancel");
             cancelButton.addActionListener(this);
@@ -126,7 +127,7 @@ public class EditPanel extends JPanel implements ActionListener {
                 updatedUser.setDateOfBirth(format.parse(getDateOfBirthField().getText()));
                 parent.getDao().update(updatedUser);
             } catch (DatabaseException e1) {
-                JOptionPane.showMessageDialog(this, e1.getMessage(), "Error",
+                JOptionPane.showMessageDialog(this, e1.getMessage(), ERROR_TITLE,
                         JOptionPane.ERROR_MESSAGE);
             } catch (ParseException e1) {
                 getDateOfBirthField().setBackground(Color.RED);

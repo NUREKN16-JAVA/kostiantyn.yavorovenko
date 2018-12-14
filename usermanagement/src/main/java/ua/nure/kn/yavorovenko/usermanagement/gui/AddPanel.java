@@ -14,7 +14,7 @@ import java.text.ParseException;
 public class AddPanel extends JPanel implements ActionListener {
     private static final String EMPTY_STRING = "";
     private static final Color EMPTY_BACKGROUND_COLOR = Color.WHITE;
-    private static final String ERROR_TITLE = "Error";
+    private static final String ERROR_TITLE = Messages.getString("AddPanel.error_title");
     private MainFrame parent;
 
 
