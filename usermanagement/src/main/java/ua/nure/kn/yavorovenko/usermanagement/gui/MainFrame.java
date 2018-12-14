@@ -18,6 +18,7 @@ public class MainFrame extends JFrame {
     private AddPanel addPanel;
     private UserDao dao;
     private EditPanel editPanel;
+    private DetailsPanel detailsPanel;
 
     public MainFrame() throws HeadlessException {
         super();
@@ -64,6 +65,18 @@ public class MainFrame extends JFrame {
     public void showEditPanel(User editUser){
         showPanel(getEditPanel());
         editPanel.setUser(editUser);
+    }
+
+    public void showDetailsPanel(User detailUser) {
+        showPanel(getDetailsPanel());
+        detailsPanel.setUser(detailUser);
+    }
+
+    private DetailsPanel getDetailsPanel() {
+        if (detailsPanel == null) {
+            detailsPanel = new DetailsPanel(this);
+        }
+        return detailsPanel;
     }
 
     private AddPanel getAddPanel() {

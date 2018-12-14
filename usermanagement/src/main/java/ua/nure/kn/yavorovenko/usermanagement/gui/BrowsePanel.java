@@ -135,16 +135,16 @@ public class BrowsePanel extends JPanel implements ActionListener {
         }
 
         if (userTable.getSelectedRow() != -1) {
-//            if ("details".equalsIgnoreCase(actionCommand)) {
-//                try {
-//                    User user = getSelectedUser();
-//                    this.setVisible(false);
-//                    parent.showDetailsPanel(user);
-//                } catch (DatabaseException e1) {
-//                    JOptionPane.showMessageDialog(this, e1.getMessage(), ERROR_TITLE,
-//                            JOptionPane.ERROR_MESSAGE);
-//                }
-//            }
+            if ("details".equalsIgnoreCase(actionCommand)) {
+                try {
+                    User user = getSelectedUser();
+                    this.setVisible(false);
+                    parent.showDetailsPanel(user);
+                } catch (DatabaseException e1) {
+                    JOptionPane.showMessageDialog(this, e1.getMessage(), ERROR_TITLE,
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
             if ("edit".equalsIgnoreCase(actionCommand)) {
                 try {
                     User user = getSelectedUser();

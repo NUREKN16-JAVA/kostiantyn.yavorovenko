@@ -239,4 +239,42 @@ public class MainFrameTest extends JFCTestCase {
         assertEquals(0, table.getRowCount());
     }
 
+    public void testDetailsUser() {
+        User detailsUser = new User(
+                ID_FOR_TUSER,
+                FIRST_NAME_FOR_TUSER,
+                LAST_NAME_FOR_TUSER,
+                DATE_OF_BIRTHDAY_FOR_TUSER
+        );
+
+        ArrayList<User> userList = new ArrayList<>();
+        userList.add(detailsUser);
+
+        mockUserDao.expectAndReturn("findAll", userList);
+        mainFrame.showBrowsePanel();
+
+        JTable table = (JTable) find(JTable.class, "userTable");
+
+        table.setRowSelectionInterval(0,0);
+
+        JButton detailsButton = (JButton) find(JButton.class, "detailsButton");
+        mockUserDao.expectAndReturn("find",ID_FOR_TUSER, detailsUser);
+        getHelper().enterClickAndLeave(new MouseEventData(this, detailsButton));
+
+        find(JPanel.class, "detailsPanel");
+        
+        JTextField fullNameField = (JTextField) find(JTextField.class, "fullNameField");
+        JTextField ageField = (JTextField) find(JTextField.class, "ageField");
+
+        assertEquals("The field must be filled", detailsUser.getFullName(), fullNameField.getText());
+        assertEquals("The field must be filled", String.valueOf(detailsUser.getAge()), ageField.getText());
+
+
+        JButton closeButton = (JButton) find(JButton.class, "closeButton");
+        mockUserDao.expectAndReturn("findAll", userList);
+        getHelper().enterClickAndLeave(new MouseEventData(this, closeButton));
+
+        find(JPanel.class, "browsePanel");
+
+    }
 }
