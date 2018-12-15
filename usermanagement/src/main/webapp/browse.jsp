@@ -29,6 +29,8 @@
             </tr>
         </c:forEach>
     </table>
+
+
     <input type="submit" name="addButton" value="Add">
     <input type="submit" name="editButton" value="Edit">
     <input type="submit" name="deleteButton" value="Delete">

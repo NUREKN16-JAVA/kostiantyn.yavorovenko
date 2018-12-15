@@ -39,6 +39,25 @@ public class BrowseServletTest extends MockServletTestCase {
                 .getAttribute("users");
         assertNotNull("Could not find list of users in sessions", collectionOfUsers);
         assertSame(listOfUsers, collectionOfUsers);
+    }
 
+    public void testEdit() {
+        User user = new User(
+                ID_FOR_TUSER,
+                FIRST_NAME_FOR_TUSER,
+                LAST_NAME_FOR_TUSER,
+                DATE_OF_BIRTHDAY_FOR_TUSER
+        );
+
+        getMockUserDao().expectAndReturn("find", ID_FOR_TUSER, user);
+
+        addRequestParameter("editButton", "Edit");
+        addRequestParameter("id", "1000");
+
+        doPost();
+
+        User userInSession = (User) getWebMockObjectFactory().getMockSession().getAttribute("user");
+        assertNotNull("Could not find user in session", userInSession);
+        assertSame(user, userInSession);
     }
 }
