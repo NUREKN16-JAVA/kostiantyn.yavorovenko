@@ -30,11 +30,11 @@ public class MainFrameTest extends JFCTestCase {
     private static final String LAST_NAME_FOR_TUSER = "Doe";
     private static final Date DATE_OF_BIRTHDAY_FOR_TUSER = new Date();
     private static final String UPDATED_FIRST_NAME_FOR_TUSER = "Bob";
+    private static final long ID_FOR_TUSER = 1L;
+    private static final String EMPTY_STRING = "";
 
     private static final String DB_DAO_FACTORY = "dao.factory";
 
-    private static final long ID_FOR_TUSER = 1L;
-    private static final String EMPTY_STRING = "";
     private DateFormat dateFormat = DateFormat.getDateInstance();
     private MainFrame mainFrame;
     private Mock mockUserDao;
