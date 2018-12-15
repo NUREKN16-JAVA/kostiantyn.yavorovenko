@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="usermanagement" basedir="." default="test">
 
-    <property name="java-packages-dir" value="ua/nure/kn/yavorovenko/usermanagement"/>
 
-    <property name="test-java-dir" value="${basedir}/src/test/java/${java-packages-dir}"/>
+    <property name="test-java-dir" value="${basedir}/src/test/java/"/>
     <property name="test-resources-dir" value="${basedir}/src/test/resources"/>
 
-    <property name="main-java-dir" value="${basedir}/src/main/java/${java-packages-dir}"/>
+    <property name="main-java-dir" value="${basedir}/src/main/java/"/>
     <property name="main-webapp-dir" value="${basedir}/src/main/webapp"/>
     <property name="main-webapp-webinf-dir" value="${main-webapp-dir}/WEB-INF"/>
     <property name="main-resources-dir" value="${basedir}/src/main/resources"/>
