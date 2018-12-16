@@ -5,15 +5,15 @@ import jade.lang.acl.ACLMessage;
 import ua.nure.kn.yavorovenko.usermanagement.User;
 import ua.nure.kn.yavorovenko.usermanagement.db.DaoFactory;
 import ua.nure.kn.yavorovenko.usermanagement.db.DatabaseException;
+import ua.nure.kn.yavorovenko.usermanagement.util.Messages;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class RequestServer extends CyclicBehaviour {
 
     private static final String STRING_SEPARATOR = ",";
+    private static final String LINE_SEPARATOR = ";";
+
     private static final int VALID_COUNT_TOKENS_IN_MSG = 2;
     private static final int SIZE_OF_EMPTY_LIST = 0;
 
@@ -33,7 +33,28 @@ public class RequestServer extends CyclicBehaviour {
     }
 
     private Collection<User> parseMessage(ACLMessage message) {
-        return null;
+        Collection<User> users = new LinkedList<>();
+
+        String content = message.getContent();
+
+        if(content != null) {
+            StringTokenizer lineTokenizer = new StringTokenizer(content, LINE_SEPARATOR);
+            while (lineTokenizer.hasMoreTokens()) {
+                String userInfo = lineTokenizer.nextToken();
+                StringTokenizer itemTokenizer  = new StringTokenizer(userInfo, STRING_SEPARATOR);
+                String id = itemTokenizer.nextToken();
+                String firstName = itemTokenizer.nextToken();
+                String lastName = itemTokenizer.nextToken();
+
+                if (MessageValidator.validateFirstName(firstName) &&
+                        MessageValidator.validateLastName(lastName) &&
+                            MessageValidator.validateId(id)) {
+                    users.add(new User(new Long(id), firstName, lastName, null));
+                }
+            }
+        }
+
+        return users;
     }
 
     private ACLMessage createReply(ACLMessage message) {
@@ -56,7 +77,7 @@ public class RequestServer extends CyclicBehaviour {
                 User user = it.next();
                 buffer.append(user.getId()).append(STRING_SEPARATOR);
                 buffer.append(user.getFirstName()).append(STRING_SEPARATOR);
-                buffer.append(user.getLastName()).append(STRING_SEPARATOR);
+                buffer.append(user.getLastName()).append(LINE_SEPARATOR);
             }
             reply.setContent(buffer.toString());
         }
