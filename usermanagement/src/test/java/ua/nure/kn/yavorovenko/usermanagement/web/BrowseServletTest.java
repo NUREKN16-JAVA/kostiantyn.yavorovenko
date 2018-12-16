@@ -1,6 +1,7 @@
 package ua.nure.kn.yavorovenko.usermanagement.web;
 
 import ua.nure.kn.yavorovenko.usermanagement.User;
+import ua.nure.kn.yavorovenko.usermanagement.db.DatabaseException;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -17,9 +18,13 @@ public class BrowseServletTest extends MockServletTestCase {
 
     private static final String DETAILS_OPTION = "Details";
     private static final String EDIT_OPTION = "Edit";
-    
+    private static final String DELETE_OPTION = "Delete";
+
     private static final String ATTR_USERS = "users";
     private static final String ATTR_USER = "user";
+    private static final String ATTR_ERROR = "error";
+
+    private static final String MESSAGE_FOR_EXCEPTION_ON_WRONG_ID = "Wrong user's id!";
 
     @Override
     public void setUp() throws Exception {
@@ -86,5 +91,25 @@ public class BrowseServletTest extends MockServletTestCase {
         User userInSession = (User) getWebMockObjectFactory().getMockSession().getAttribute(ATTR_USER);
         assertNotNull("Could not find user in session", userInSession);
         assertSame(user, userInSession);
+    }
+
+    public void testDelete() {
+        User user = new User(
+                ID_FOR_TUSER,
+                FIRST_NAME_FOR_TUSER,
+                LAST_NAME_FOR_TUSER,
+                DATE_OF_BIRTHDAY_FOR_TUSER
+        );
+
+        getMockUserDao().expectAndReturn("find", ID_FOR_TUSER, user);
+        getMockUserDao().expect("delete", user);
+
+        addRequestParameter("deleteButton", DELETE_OPTION);
+        addRequestParameter("id", ID_FOR_TUSER_STRING);
+
+        doPost();
+
+        User userInSession = (User) getWebMockObjectFactory().getMockSession().getAttribute(ATTR_USER);
+        assertNull("The user must not exists in session scope", userInSession);
     }
 }

@@ -3,6 +3,7 @@ package ua.nure.kn.yavorovenko.usermanagement.web;
 import ua.nure.kn.yavorovenko.usermanagement.User;
 import ua.nure.kn.yavorovenko.usermanagement.db.DaoFactory;
 import ua.nure.kn.yavorovenko.usermanagement.db.DatabaseException;
+import ua.nure.kn.yavorovenko.usermanagement.db.UserDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -73,7 +74,24 @@ public class BrowseServlet extends HttpServlet {
         req.getRequestDispatcher(EDIT_SERVLET).forward(req, resp);
     }
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idStrUser = req.getParameter("id");
 
+        if (idStrUser == null || idStrUser.trim().isEmpty()) {
+            req.setAttribute(ATTR_ERROR, "You must select a user");
+            req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
+            return;
+        }
+
+        try {
+            UserDao userDao = DaoFactory.getInstance().getUserDao();
+            User deleteUser = userDao.find(Long.parseLong(idStrUser));
+            userDao.delete(deleteUser);
+        } catch (Exception e) {
+            req.setAttribute(ATTR_ERROR, "ERROR"  + e.toString());
+            req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
+            return;
+        }
+        req.getRequestDispatcher(BROWSE_SERVLET).forward(req, resp);
     }
     private void details(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idStrUser = req.getParameter("id");

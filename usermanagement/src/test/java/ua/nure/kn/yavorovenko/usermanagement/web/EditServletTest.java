@@ -11,8 +11,10 @@ public class EditServletTest extends MockServletTestCase {
     private static final String FIRST_NAME_FOR_TUSER = "John";
     private static final String LAST_NAME_FOR_TUSER = "Doe";
     private static final Date DATE_OF_BIRTHDAY_FOR_TUSER = new Date();
+
     private static final String OK_OPTION = "Ok";
-    private static final String ERROR_ATTRIBUTE = "error";
+
+    private static final String ATTR_ERROR = "error";
 
     @Override
     public void setUp() throws Exception {
@@ -44,7 +46,7 @@ public class EditServletTest extends MockServletTestCase {
         addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(DATE_OF_BIRTHDAY_FOR_TUSER));
         addRequestParameter("okButton", OK_OPTION);
         doPost();
-        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ERROR_ATTRIBUTE);
+        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ATTR_ERROR);
         assertNotNull("The session scope must have a error message", errorMessage);
     }
 
@@ -54,7 +56,7 @@ public class EditServletTest extends MockServletTestCase {
         addRequestParameter("dateOfBirth", DateFormat.getDateInstance().format(DATE_OF_BIRTHDAY_FOR_TUSER));
         addRequestParameter("okButton", OK_OPTION);
         doPost();
-        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ERROR_ATTRIBUTE);
+        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ATTR_ERROR);
         assertNotNull("The session scope must have a error message", errorMessage);
     }
 
@@ -64,7 +66,7 @@ public class EditServletTest extends MockServletTestCase {
         addRequestParameter("lastName", LAST_NAME_FOR_TUSER);
         addRequestParameter("okButton", OK_OPTION);
         doPost();
-        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ERROR_ATTRIBUTE);
+        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ATTR_ERROR);
         assertNotNull("The session scope must have a error message", errorMessage);
     }
 
@@ -75,7 +77,7 @@ public class EditServletTest extends MockServletTestCase {
         addRequestParameter("dateOfBirth", "#####");
         addRequestParameter("okButton", OK_OPTION);
         doPost();
-        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ERROR_ATTRIBUTE);
+        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ATTR_ERROR);
         assertNotNull("The session scope must have a error message", errorMessage);
     }
 }
