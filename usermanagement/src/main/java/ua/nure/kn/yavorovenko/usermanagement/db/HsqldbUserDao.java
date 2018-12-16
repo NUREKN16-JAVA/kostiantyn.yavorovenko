@@ -12,6 +12,7 @@ class HsqldbUserDao implements UserDao {
     private static final String DELETE_USER_SQL = "DELETE FROM PUBLIC.USERS WHERE id = ?";
     private static final String FIND_USER_SQL = "SELECT firstname, lastname, dateofbirth FROM PUBLIC.USERS WHERE id = ?";
     private static final String FIND_ALL_SQL = "SELECT id, firstname, lastname, dateofbirth FROM PUBLIC.USERS";
+    private static final String FIND_BY_FULL_NAME_SQL = "SELECT id, firstname, lastname, dateofbirth FROM PUBLIC.USERS WHERE firstname = ? AND lastname = ?";
 
     private static final String IDENTITY_SQL = "CALL IDENTITY()";
 
@@ -134,6 +135,38 @@ class HsqldbUserDao implements UserDao {
                         resultSet.getDate(4)
                 );
                 users.add(user);
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Database has some errors", e);
+        }
+
+        return users;
+    }
+
+    @Override
+    public Collection<User> find(String firstName, String lastName) throws DatabaseException {
+        Collection<User> users = new LinkedList<>();
+
+        try (Connection connection = connectionFactory.createConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_FULL_NAME_SQL)) {
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User(
+                        resultSet.getLong(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getDate(4)
+                );
+                users.add(user);
+            }
+
+            if (users.isEmpty()) {
+                throw new DatabaseException("The users does not exist!");
             }
 
         } catch (SQLException e) {
