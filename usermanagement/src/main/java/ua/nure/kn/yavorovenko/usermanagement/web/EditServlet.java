@@ -30,7 +30,7 @@ public class EditServlet extends HttpServlet {
         }
     }
 
-    private void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher(EDIT_PAGE).forward(req, resp);
     }
 
@@ -52,10 +52,10 @@ public class EditServlet extends HttpServlet {
         } catch (DatabaseException e) {
             throw new ServletException("Could not update users in DB", e);
         }
-        req.getRequestDispatcher("/browse").forward(req, resp);
+        req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
     }
 
-    private void processUser(User user) throws DatabaseException {
+    protected void processUser(User user) throws DatabaseException {
         DaoFactory.getInstance().getUserDao().update(user);
     }
 
@@ -65,10 +65,6 @@ public class EditServlet extends HttpServlet {
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         String dateOfBirthString = req.getParameter("dateOfBirth");
-
-        if (idString == null) {
-            throw new ValidationException("ID is empty!");
-        }
 
         if (firstName == null) {
             throw new ValidationException("First name is empty!");
@@ -82,7 +78,9 @@ public class EditServlet extends HttpServlet {
             throw new ValidationException("Date of birth is empty!");
         }
 
-        user.setId(new Long(idString));
+        if (idString != null) {
+            user.setId(new Long(idString));
+        }
         user.setFirstName(firstName);
         user.setLastName(lastName);
 

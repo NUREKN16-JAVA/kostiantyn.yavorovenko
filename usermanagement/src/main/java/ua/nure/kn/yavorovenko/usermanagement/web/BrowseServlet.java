@@ -17,6 +17,7 @@ public class BrowseServlet extends HttpServlet {
     private static final String ATTR_USERS = "users";
     private static final String BROWSE_PAGE = "/browse.jsp";
     private static final String EDIT_PAGE = "/edit.jsp";
+    private static final String ADD_PAGE = "add.jsp";
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,7 +46,7 @@ public class BrowseServlet extends HttpServlet {
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.getRequestDispatcher(ADD_PAGE).forward(req, resp);
     }
     private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idStrUser = req.getParameter("id");
