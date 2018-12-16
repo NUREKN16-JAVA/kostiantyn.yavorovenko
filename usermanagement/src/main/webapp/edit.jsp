@@ -9,7 +9,7 @@
     <form action="<%=request.getContextPath()%>/edit" method="post">
         <input type="hidden" name="id" value="${user.id}">
         First name: <input type="text" name="firstName" value="${user.firstName}"><br>
-        Last name: <input type="text" name="lastName" value="${user.firstName}"><br>
+        Last name: <input type="text" name="lastName" value="${user.lastName}"><br>
         Date of birthday: <input type="text" name="dateOfBirth" value="<fmt:formatDate value="${user.dateOfBirth}"
                                                                                        type="date" dateStyle="medium"/>"><br>
         <input type="submit" name="okButton" value="Ok">
