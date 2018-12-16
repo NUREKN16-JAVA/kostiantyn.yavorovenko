@@ -91,7 +91,7 @@ public class BrowseServlet extends HttpServlet {
             req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
             return;
         }
-        req.getRequestDispatcher(BROWSE_SERVLET).forward(req, resp);
+        resp.sendRedirect(BROWSE_SERVLET);
     }
     private void details(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idStrUser = req.getParameter("id");
