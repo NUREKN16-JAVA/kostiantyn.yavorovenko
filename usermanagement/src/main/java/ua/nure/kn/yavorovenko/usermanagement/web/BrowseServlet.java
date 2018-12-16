@@ -15,9 +15,13 @@ public class BrowseServlet extends HttpServlet {
 
     private static final long serialVersionUID = -4683563138736520242L;
     private static final String ATTR_USERS = "users";
+    private static final String ATTR_ERROR = "error";
+
     private static final String BROWSE_PAGE = "/browse.jsp";
-    private static final String EDIT_PAGE = "/edit.jsp";
-    private static final String ADD_PAGE = "add.jsp";
+
+    private static final String EDIT_SERVLET = "/edit";
+    private static final String ADD_SERVLET = "/add";
+    private static final String BROWSE_SERVLET = "/browse";
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +42,7 @@ public class BrowseServlet extends HttpServlet {
         Collection<User> collectionOfUsers;
         try {
             collectionOfUsers = DaoFactory.getInstance().getUserDao().findAll();
-            req.getSession().setAttribute(ATTR_USERS, collectionOfUsers);
+            req.getSession(true).setAttribute(ATTR_USERS, collectionOfUsers);
             req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
         } catch (DatabaseException e) {
             throw new ServletException("Can not get users from DB", e);
@@ -46,26 +50,26 @@ public class BrowseServlet extends HttpServlet {
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(ADD_PAGE).forward(req, resp);
+        req.getRequestDispatcher(ADD_SERVLET).forward(req, resp);
     }
     private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idStrUser = req.getParameter("id");
 
         if (idStrUser == null || idStrUser.trim().isEmpty()) {
-            req.setAttribute("error", "You must select a user");
+            req.setAttribute(ATTR_ERROR, "You must select a user");
             req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
             return;
         }
 
         try {
-            User foundUser = DaoFactory.getInstance().getUserDao().find(new Long(idStrUser));
-            req.getSession().setAttribute("user", foundUser);
-        } catch (DatabaseException e) {
-            req.setAttribute("error", "ERROR"  + e.toString());
+            User foundUser = DaoFactory.getInstance().getUserDao().find(Long.parseLong(idStrUser));
+            req.getSession(true).setAttribute("user", foundUser);
+        } catch (Exception e) {
+            req.setAttribute(ATTR_ERROR, "ERROR"  + e.toString());
             req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
             return;
         }
-        req.getRequestDispatcher(EDIT_PAGE).forward(req, resp);
+        req.getRequestDispatcher(EDIT_SERVLET).forward(req, resp);
     }
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

@@ -16,6 +16,7 @@ public class AddServlet extends EditServlet {
     @Override
     protected void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher(ADD_PAGE).forward(req, resp);
+        return;
     }
 
     @Override

@@ -16,11 +16,11 @@ import java.text.ParseException;
 public class EditServlet extends HttpServlet {
     private static final long serialVersionUID = -2274888176643905731L;
     private static final String EDIT_PAGE = "/edit.jsp";
-    private static final String BROWSE_PAGE = "/browse.jsp";
+    private static final String BROWSE_SERVLET = "/browse";
+    private static final String ATTR_ERROR = "error";
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.service(req, resp);
         if (req.getParameter("okButton") != null) {
             doOk(req, resp);
         } else if (req.getParameter("cancelButton") != null) {
@@ -35,7 +35,7 @@ public class EditServlet extends HttpServlet {
     }
 
     private void doCancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
+        req.getRequestDispatcher(BROWSE_SERVLET).forward(req, resp);
     }
 
     private void doOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,7 +43,7 @@ public class EditServlet extends HttpServlet {
         try {
             user = getUserFromRequest(req);
         } catch (ValidationException e) {
-            req.setAttribute("error", e.getMessage());
+            req.setAttribute(ATTR_ERROR, e.getMessage());
             showPage(req, resp);
             return;
         }
@@ -52,7 +52,7 @@ public class EditServlet extends HttpServlet {
         } catch (DatabaseException e) {
             throw new ServletException("Could not update users in DB", e);
         }
-        req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
+        req.getRequestDispatcher(BROWSE_SERVLET).forward(req, resp);
     }
 
     protected void processUser(User user) throws DatabaseException {

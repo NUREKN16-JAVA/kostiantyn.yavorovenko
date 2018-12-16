@@ -15,10 +15,10 @@
         <input type="submit" name="okButton" value="Ok">
         <input type="submit" name="cancelButton" value="Cancel">
     </form>
-<c:if test="$(requestScope.error != null)">
-    <script>
-        alert('$(requestScope.error != null)')
-    </script>
-</c:if>
+    <c:if test="${requestScope.error != null}">
+        <script>
+            alert('${requestScope.error}');
+        </script>
+    </c:if>
 </body>
 </html>
