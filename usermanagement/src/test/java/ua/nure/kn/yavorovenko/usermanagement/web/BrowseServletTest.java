@@ -10,9 +10,16 @@ import java.util.List;
 public class BrowseServletTest extends MockServletTestCase {
 
     private static final Long ID_FOR_TUSER = 1000L;
+    private static final String ID_FOR_TUSER_STRING = "1000";
     private static final String FIRST_NAME_FOR_TUSER = "John";
     private static final String LAST_NAME_FOR_TUSER = "Doe";
     private static final Date DATE_OF_BIRTHDAY_FOR_TUSER = new Date();
+
+    private static final String DETAILS_OPTION = "Details";
+    private static final String EDIT_OPTION = "Edit";
+    
+    private static final String ATTR_USERS = "users";
+    private static final String ATTR_USER = "user";
 
     @Override
     public void setUp() throws Exception {
@@ -36,7 +43,7 @@ public class BrowseServletTest extends MockServletTestCase {
 
         Collection<User> collectionOfUsers = (Collection<User>) getWebMockObjectFactory()
                 .getMockSession()
-                .getAttribute("users");
+                .getAttribute(ATTR_USERS);
         assertNotNull("Could not find list of users in sessions", collectionOfUsers);
         assertSame(listOfUsers, collectionOfUsers);
     }
@@ -51,12 +58,32 @@ public class BrowseServletTest extends MockServletTestCase {
 
         getMockUserDao().expectAndReturn("find", ID_FOR_TUSER, user);
 
-        addRequestParameter("editButton", "Edit");
-        addRequestParameter("id", "1000");
+        addRequestParameter("editButton", EDIT_OPTION);
+        addRequestParameter("id", ID_FOR_TUSER_STRING);
 
         doPost();
 
-        User userInSession = (User) getWebMockObjectFactory().getMockSession().getAttribute("user");
+        User userInSession = (User) getWebMockObjectFactory().getMockSession().getAttribute(ATTR_USER);
+        assertNotNull("Could not find user in session", userInSession);
+        assertSame(user, userInSession);
+    }
+
+    public void testDetails() {
+        User user = new User(
+                ID_FOR_TUSER,
+                FIRST_NAME_FOR_TUSER,
+                LAST_NAME_FOR_TUSER,
+                DATE_OF_BIRTHDAY_FOR_TUSER
+        );
+
+        getMockUserDao().expectAndReturn("find", ID_FOR_TUSER, user);
+
+        addRequestParameter("detailsButton", DETAILS_OPTION);
+        addRequestParameter("id", ID_FOR_TUSER_STRING);
+
+        doPost();
+
+        User userInSession = (User) getWebMockObjectFactory().getMockSession().getAttribute(ATTR_USER);
         assertNotNull("Could not find user in session", userInSession);
         assertSame(user, userInSession);
     }

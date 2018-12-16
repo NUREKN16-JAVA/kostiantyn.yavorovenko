@@ -22,6 +22,7 @@ public class BrowseServlet extends HttpServlet {
     private static final String EDIT_SERVLET = "/edit";
     private static final String ADD_SERVLET = "/add";
     private static final String BROWSE_SERVLET = "/browse";
+    private static final String DETAILS_SERVLET = "/details";
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -75,7 +76,23 @@ public class BrowseServlet extends HttpServlet {
 
     }
     private void details(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idStrUser = req.getParameter("id");
 
+        if (idStrUser == null || idStrUser.trim().isEmpty()) {
+            req.setAttribute(ATTR_ERROR, "You must select a user");
+            req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
+            return;
+        }
+
+        try {
+            User foundUser = DaoFactory.getInstance().getUserDao().find(Long.parseLong(idStrUser));
+            req.getSession(true).setAttribute("user", foundUser);
+        } catch (Exception e) {
+            req.setAttribute(ATTR_ERROR, "ERROR"  + e.toString());
+            req.getRequestDispatcher(BROWSE_PAGE).forward(req, resp);
+            return;
+        }
+        req.getRequestDispatcher(DETAILS_SERVLET).forward(req, resp);
     }
 
 
