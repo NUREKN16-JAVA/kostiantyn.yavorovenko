@@ -24,7 +24,6 @@ public class BrowseServletTest extends MockServletTestCase {
     private static final String ATTR_USER = "user";
     private static final String ATTR_ERROR = "error";
 
-    private static final String MESSAGE_FOR_EXCEPTION_ON_WRONG_ID = "Wrong user's id!";
 
     @Override
     public void setUp() throws Exception {
@@ -73,6 +72,15 @@ public class BrowseServletTest extends MockServletTestCase {
         assertSame(user, userInSession);
     }
 
+    public void testEditWithEmptyId() {
+        addRequestParameter("editButton", EDIT_OPTION);
+
+        doPost();
+
+        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ATTR_ERROR);
+        assertNotNull("The session scope must have a error message", errorMessage);
+    }
+
     public void testDetails() {
         User user = new User(
                 ID_FOR_TUSER,
@@ -93,6 +101,15 @@ public class BrowseServletTest extends MockServletTestCase {
         assertSame(user, userInSession);
     }
 
+    public void testDetailsWithEmptyId() {
+        addRequestParameter("detailsButton", DETAILS_OPTION);
+
+        doPost();
+
+        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ATTR_ERROR);
+        assertNotNull("The session scope must have a error message", errorMessage);
+    }
+
     public void testDelete() {
         User user = new User(
                 ID_FOR_TUSER,
@@ -111,5 +128,14 @@ public class BrowseServletTest extends MockServletTestCase {
 
         User userInSession = (User) getWebMockObjectFactory().getMockSession().getAttribute(ATTR_USER);
         assertNull("The user must not exists in session scope", userInSession);
+    }
+
+    public void testDeleteWithEmptyId() {
+        addRequestParameter("deleteButton", DELETE_OPTION);
+
+        doPost();
+
+        String errorMessage = (String) getWebMockObjectFactory().getMockRequest().getAttribute(ATTR_ERROR);
+        assertNotNull("The session scope must have a error message", errorMessage);
     }
 }
