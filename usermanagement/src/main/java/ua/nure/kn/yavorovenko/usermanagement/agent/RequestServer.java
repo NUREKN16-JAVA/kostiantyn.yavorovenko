@@ -5,7 +5,6 @@ import jade.lang.acl.ACLMessage;
 import ua.nure.kn.yavorovenko.usermanagement.User;
 import ua.nure.kn.yavorovenko.usermanagement.db.DaoFactory;
 import ua.nure.kn.yavorovenko.usermanagement.db.DatabaseException;
-import ua.nure.kn.yavorovenko.usermanagement.util.Messages;
 
 import java.util.*;
 

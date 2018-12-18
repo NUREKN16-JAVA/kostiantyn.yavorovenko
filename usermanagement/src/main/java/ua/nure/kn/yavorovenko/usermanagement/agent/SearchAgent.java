@@ -8,6 +8,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import ua.nure.kn.yavorovenko.usermanagement.User;
+import ua.nure.kn.yavorovenko.usermanagement.agent.gui.SearchGui;
 import ua.nure.kn.yavorovenko.usermanagement.db.DaoFactory;
 import ua.nure.kn.yavorovenko.usermanagement.db.DatabaseException;
 
@@ -19,10 +20,15 @@ public class SearchAgent extends Agent {
 
     private AID[] aids;
 
+    SearchGui searchGui = null;
+
     @Override
     protected void setup() {
         super.setup();
         System.out.println(getAID().getName() + " started.");
+
+        searchGui = new SearchGui(this);
+        searchGui.setVisible(true);
 
         DFAgentDescription dfAgentDescription = new DFAgentDescription();
         dfAgentDescription.setName(getAID());
@@ -61,7 +67,7 @@ public class SearchAgent extends Agent {
                 }
             }
         });
-        
+
         addBehaviour(new RequestServer());
 
     }
@@ -74,7 +80,8 @@ public class SearchAgent extends Agent {
         } catch (FIPAException e) {
             e.printStackTrace();
         }
-
+        searchGui.setVisible(false);
+        searchGui.dispose();
         super.takeDown();
     }
 
@@ -92,6 +99,6 @@ public class SearchAgent extends Agent {
     }
 
     void showUsers(Collection<User> users) {
-
+        searchGui.addUsers(users);
     }
 }
