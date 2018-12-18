@@ -12,8 +12,8 @@ public class SearchRequestBehaviour extends Behaviour {
     private String firstName;
     private String lastName;
 
-    public SearchRequestBehaviour(AID[] aid, String firstName, String lastName) {
-        this.aids = aid;
+    public SearchRequestBehaviour(AID[] aids, String firstName, String lastName) {
+        this.aids = aids;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -24,6 +24,7 @@ public class SearchRequestBehaviour extends Behaviour {
         message.setContent(firstName + STRING_SEPARATOR + lastName);
         if (aids != null) {
             for (int i = 0; i < aids.length; i++) {
+                System.out.println(message.getContent() + " debug!!!");
                 message.addReceiver(aids[i]);
             }
             myAgent.send(message);

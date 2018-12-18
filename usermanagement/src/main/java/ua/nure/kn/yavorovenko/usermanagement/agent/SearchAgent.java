@@ -12,11 +12,12 @@ import ua.nure.kn.yavorovenko.usermanagement.agent.gui.SearchGui;
 import ua.nure.kn.yavorovenko.usermanagement.db.DaoFactory;
 import ua.nure.kn.yavorovenko.usermanagement.db.DatabaseException;
 
-import java.util.Collection;
+import java.sql.Array;
+import java.util.*;
 
 
 public class SearchAgent extends Agent {
-    private static final int ONE_MINUTE_IN_MLSECONDS = 60000;
+    private static final int ONE_MINUTE_IN_MLSECONDS = 30000;
 
     private AID[] aids;
 
@@ -53,15 +54,26 @@ public class SearchAgent extends Agent {
                 serviceDescription.setType("searching");
                 agentDescription.addServices(serviceDescription);
 
+                AID myID = getAID();
+
                 try {
                     DFAgentDescription[] descriptions =
                             DFService.search(myAgent, agentDescription);
-                    aids = new AID[descriptions.length];
+                    aids = new AID[descriptions.length - 1];
+
+                    System.out.println("Count of AID's: " + descriptions.length);
+                    List<AID> aidList = new LinkedList<>();
 
                     for (int i = 0; i < descriptions.length; i++) {
                         DFAgentDescription description = descriptions[i];
-                        aids[i] = description.getName();
+                        if( !description.getName().equals(myID)) {
+                            aidList.add(description.getName());
+                        }
                     }
+                    aids = aidList.toArray(new AID[0]);
+
+                    System.out.println("Actually of AID's: " + aids.length);
+
                 } catch (FIPAException e) {
                     e.printStackTrace();
                 }

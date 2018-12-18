@@ -24,6 +24,7 @@ public class RequestServer extends CyclicBehaviour {
                 myAgent.send(createReply(message));
             } else {
                 Collection<User> users = parseMessage(message);
+                System.out.println(users);
                 ((SearchAgent) myAgent).showUsers(users);
             }
         } else {
@@ -35,6 +36,7 @@ public class RequestServer extends CyclicBehaviour {
         Collection<User> users = new LinkedList<>();
 
         String content = message.getContent();
+        System.out.println("Parsed message:" + content);
 
         if(content != null) {
             StringTokenizer lineTokenizer = new StringTokenizer(content, LINE_SEPARATOR);
@@ -45,11 +47,11 @@ public class RequestServer extends CyclicBehaviour {
                 String firstName = itemTokenizer.nextToken();
                 String lastName = itemTokenizer.nextToken();
 
-                if (MessageValidator.validateFirstName(firstName) &&
-                        MessageValidator.validateLastName(lastName) &&
-                            MessageValidator.validateId(id)) {
+//                if (MessageValidator.validateFirstName(firstName) &&
+//                        MessageValidator.validateLastName(lastName) &&
+//                            MessageValidator.validateId(id)) {
                     users.add(new User(new Long(id), firstName, lastName, null));
-                }
+//                }
             }
         }
 
@@ -59,6 +61,7 @@ public class RequestServer extends CyclicBehaviour {
     private ACLMessage createReply(ACLMessage message) {
         ACLMessage reply = message.createReply();
         String content = message.getContent();
+        System.out.println("createReply message:" + content);
         StringTokenizer tokenizer = new StringTokenizer(content, STRING_SEPARATOR);
         if (tokenizer.countTokens() == VALID_COUNT_TOKENS_IN_MSG) {
             String firstName = tokenizer.nextToken();

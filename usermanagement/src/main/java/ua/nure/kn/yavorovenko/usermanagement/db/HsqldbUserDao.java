@@ -165,10 +165,6 @@ class HsqldbUserDao implements UserDao {
                 users.add(user);
             }
 
-            if (users.isEmpty()) {
-                throw new DatabaseException("The users does not exist!");
-            }
-
         } catch (SQLException e) {
             throw new DatabaseException("Database has some errors", e);
         }
