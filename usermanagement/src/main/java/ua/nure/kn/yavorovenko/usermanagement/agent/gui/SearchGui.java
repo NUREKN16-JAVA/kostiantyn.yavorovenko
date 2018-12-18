@@ -183,7 +183,7 @@ public class SearchGui extends JFrame {
                 String firstName = getFirstNameField().getText();
                 String lastName = getLastNameField().getText();
                 try {
-//                    clearUsers();
+                    clearUsers();
                     agent.search(firstName, lastName);
                 } catch (SearchException e1) {
                     throw new RuntimeException(e1);
