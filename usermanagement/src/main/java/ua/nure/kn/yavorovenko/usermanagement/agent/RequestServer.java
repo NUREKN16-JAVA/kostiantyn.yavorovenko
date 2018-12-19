@@ -26,6 +26,7 @@ public class RequestServer extends CyclicBehaviour {
                 Collection<User> users = parseMessage(message);
                 System.out.println("In action, the list of arrived user:" + users);
                 ((SearchAgent) myAgent).showUsers(users);
+                ((SearchAgent) myAgent).setSender(message.getSender().getName());
             }
         } else {
             block();

@@ -6,8 +6,7 @@ import ua.nure.kn.yavorovenko.usermanagement.agent.SearchException;
 import ua.nure.kn.yavorovenko.usermanagement.gui.UserTableModel;
 import ua.nure.kn.yavorovenko.usermanagement.util.Messages;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -33,6 +32,8 @@ public class SearchGui extends JFrame {
 
     private JTable table;
 
+    private JLabel senderLabel;
+
 
     public SearchGui(SearchAgent agent) {
         this.agent = agent;
@@ -52,8 +53,19 @@ public class SearchGui extends JFrame {
             contentPanel.setLayout(new BorderLayout());
             contentPanel.add(getSearchPanel(), BorderLayout.NORTH);
             contentPanel.add(new JScrollPane(getTablePanel()), BorderLayout.CENTER);
+            contentPanel.add(getSenderLabel(), BorderLayout.SOUTH);
         }
         return contentPanel;
+    }
+
+    private JLabel getSenderLabel() {
+        if (senderLabel == null) {
+            senderLabel = new JLabel();
+            senderLabel.setText("");
+            senderLabel.setName("senderLabel");
+            senderLabel.setBackground(Color.GRAY);
+        }
+        return senderLabel;
     }
 
     private JPanel getTablePanel() {
@@ -81,9 +93,9 @@ public class SearchGui extends JFrame {
     }
 
     class SearchPanel extends JPanel implements ActionListener {
+
         //        protected JFrame parent;
         SearchAgent agent;
-
         private JPanel buttonPanel;
 
         private JPanel fieldPanel;
@@ -105,7 +117,7 @@ public class SearchGui extends JFrame {
         }
 
         private void initialize() {
-            this.setName("addPanel"); 
+            this.setName("addPanel");
             this.setLayout(new BorderLayout());
             this.add(getFieldPanel(), BorderLayout.NORTH);
 
@@ -123,7 +135,7 @@ public class SearchGui extends JFrame {
         private JButton getCancelButton() {
             if (cancelButton == null) {
                 cancelButton = new JButton();
-                cancelButton.setText(Messages.getString("AddPanel.cancel")); 
+                cancelButton.setText(Messages.getString("AddPanel.cancel"));
                 cancelButton.setName("cancelButton");
                 cancelButton.setActionCommand("cancel");
                 cancelButton.addActionListener(this);
@@ -204,8 +216,8 @@ public class SearchGui extends JFrame {
             getFirstNameField().setText("");
             getLastNameField().setText("");
         }
-    }
 
+    }
     public void addUsers(Collection<User> users) {
         System.out.println("addUsers : " + users);
         UserTableModel model = (UserTableModel) getTable().getModel();
@@ -217,6 +229,12 @@ public class SearchGui extends JFrame {
         System.out.println("clearUsers : ");
         UserTableModel model = (UserTableModel) getTable().getModel();
         model.clearUsers();
+        senderLabel.setText("none");
+        this.repaint();
+    }
+
+    public void setSender(String name) {
+        senderLabel.setText("The last data obtained from " + name);
         this.repaint();
     }
 }

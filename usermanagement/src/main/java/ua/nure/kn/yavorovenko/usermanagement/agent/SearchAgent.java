@@ -113,4 +113,8 @@ public class SearchAgent extends Agent {
     void showUsers(Collection<User> users) {
         searchGui.addUsers(users);
     }
+
+    public void setSender(String name) {
+        searchGui.setSender(name);
+    }
 }
